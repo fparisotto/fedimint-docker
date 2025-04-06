@@ -16,11 +16,10 @@ services:
     volumes:
       - "letsencrypt_data:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
-
   fedimintd:
     logging:
       driver: "local" # Do some log rotation by default
-    image: fedimint/fedimintd:v0.4.3
+    image: fedimint/fedimintd:v0.5.1
     container_name: fedimintd
     volumes:
       - fedimintd_data:/data
@@ -42,11 +41,10 @@ services:
       - "traefik.http.routers.fedimintd.rule=Host(`${FM_DOMAIN}`) && Path(`/ws/`)"
       - "traefik.http.routers.fedimintd.entrypoints=websecure"
       - "traefik.http.routers.fedimintd.tls.certresolver=myresolver"
-
   guardian-ui:
     logging:
       driver: "local" # Do some log rotation by default
-    image: fedimintui/fedimint-ui:0.4.3
+    image: fedimintui/fedimint-ui:0.4.4
     container_name: guardian-ui
     environment:
       - PORT=80
@@ -60,7 +58,6 @@ services:
       - "traefik.http.routers.guardian-ui.rule=Host(`${FM_DOMAIN}`)"
       - "traefik.http.routers.guardian-ui.entrypoints=websecure"
       - "traefik.http.routers.guardian-ui.tls.certresolver=myresolver"
-
 volumes:
   letsencrypt_data:
   fedimintd_data:

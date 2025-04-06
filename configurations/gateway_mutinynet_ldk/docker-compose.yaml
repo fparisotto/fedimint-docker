@@ -18,11 +18,10 @@ services:
       - "letsencrypt_data:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: always
-
   gatewayd:
     logging:
       driver: "local" # Do some log rotation by default
-    image: fedimint/gatewayd:v0.4.3
+    image: fedimint/gatewayd:v0.5.1
     command: gatewayd ldk
     environment:
       # Path to folder containing gateway config and data files
@@ -51,11 +50,10 @@ services:
       - "traefik.http.routers.gatewayd.rule=Host(`${FM_GATEWAY_DOMAIN} && Path(`/api/`)`)"
       - "traefik.http.routers.gatewayd.entrypoints=websecure"
       - "traefik.http.routers.gatewayd.tls.certresolver=myresolver"
-
   gateway-ui:
     logging:
       driver: "local" # Do some log rotation by default
-    image: fedimintui/fedimint-ui:0.4.3
+    image: fedimintui/fedimint-ui:0.4.4
     # image: gateway-ui
     ports:
       - "0.0.0.0:3001:3001"
@@ -73,7 +71,6 @@ services:
       - "traefik.http.routers.gateway-ui.rule=Host(`${FM_GATEWAY_DOMAIN}`)"
       - "traefik.http.routers.gateway-ui.entrypoints=websecure"
       - "traefik.http.routers.gateway-ui.tls.certresolver=myresolver"
-
 volumes:
   letsencrypt_data:
   gateway_datadir:

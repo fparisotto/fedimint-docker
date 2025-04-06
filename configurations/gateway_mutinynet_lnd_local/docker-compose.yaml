@@ -1,6 +1,5 @@
 # Important: 127.0.0.1 should be replaced by the external ip address of the machine
 version: "3"
-
 services:
   traefik:
     logging:
@@ -21,11 +20,10 @@ services:
       - "letsencrypt_data:/letsencrypt"
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
     restart: always
-
   gatewayd:
     logging:
       driver: "local" # Do some log rotation by default
-    image: fedimint/gatewayd:v0.4.3
+    image: fedimint/gatewayd:v0.5.1
     container_name: gatewayd
     command: gatewayd lnd
     environment:
@@ -51,11 +49,10 @@ services:
       - "traefik.http.routers.gatewayd.rule=Host(`gatewayd.${FM_GATEWAY_DOMAIN}`)"
       - "traefik.http.routers.gatewayd.entrypoints=websecure"
       - "traefik.http.routers.gatewayd.tls.certresolver=myresolver"
-
   gateway-ui:
     logging:
       driver: "local" # Do some log rotation by default
-    image: fedimintui/fedimint-ui:0.4.3
+    image: fedimintui/fedimint-ui:0.4.4
     container_name: gateway-ui
     environment:
       - PORT=80
@@ -71,7 +68,6 @@ services:
       - "traefik.http.routers.gateway-ui.rule=Host(`gateway-ui.${FM_GATEWAY_DOMAIN}`)"
       - "traefik.http.routers.gateway-ui.entrypoints=websecure"
       - "traefik.http.routers.gateway-ui.tls.certresolver=myresolver"
-
   lnd:
     logging:
       driver: "local" # Do some log rotation by default
@@ -89,7 +85,6 @@ services:
     depends_on:
       - bitcoind
     restart: always
-
   bitcoind:
     logging:
       driver: "local" # Do some log rotation by default
@@ -102,7 +97,6 @@ services:
       - "bitcoin_datadir:/root/.bitcoin"
     restart: always
     platform: linux/amd64
-
 volumes:
   letsencrypt_data:
   bitcoin_datadir:
