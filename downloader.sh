@@ -1,5 +1,5 @@
 # You can run this script with:
-# bash <(curl -sSf https://raw.githubusercontent.com/fedimint/fedimint-docker/master/downloader.sh)
+# bash <(curl -sSf https://raw.githubusercontent.com/fparisotto/fedimint-docker/refs/heads/bitdevsfln/downloader.sh)
 
 # 0. Intro
 intro() {
@@ -257,7 +257,7 @@ build_service_dir() {
   echo
   echo "Creating directory $INSTALL_DIR..."
   mkdir -p "$INSTALL_DIR"
-  BASE_URL="https://raw.githubusercontent.com/fedimint/fedimint-docker/master/configurations/$FEDIMINT_SERVICE"
+  BASE_URL="https://raw.githubusercontent.com/fparisotto/fedimint-docker/refs/heads/bitdevsfln/configurations/$FEDIMINT_SERVICE"
 
   echo "Downloading from $BASE_URL"
   echo "Downloading docker-compose.yaml..."
